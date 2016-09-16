@@ -3,6 +3,7 @@ package cz.GravelCZLP.PingAPI.reflect;
 import java.lang.reflect.Field;
 
 public class ReflectUtils {
+	
 	public static Field getFirstFieldByType(Class<?> clazz, Class<?> type) {
 		for(Field field : clazz.getDeclaredFields()) {
 			field.setAccessible(true);
@@ -12,4 +13,5 @@ public class ReflectUtils {
 		}
 		return null;
 	}
+	
 }

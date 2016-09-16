@@ -64,7 +64,7 @@ public class DuplexHandler extends ChannelDuplexHandler {
 			int max = ping.b().a();
 			int online = ping.b().b();
 			int protocolVersion = 210;
-			String protocolName = ping.d();
+			String protocolName = "";
 			GameProfile[] profiles = ping.b().c();
 			List<String> list = new ArrayList<String>();
 			for(int i = 0; i < profiles.length; i++) {

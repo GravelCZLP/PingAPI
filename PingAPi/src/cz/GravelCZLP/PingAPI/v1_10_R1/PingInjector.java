@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_10_R1.CraftServer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.server.ServerListPingEvent;
 
 import cz.GravelCZLP.PingAPI.reflect.ReflectUtils;
@@ -66,6 +67,12 @@ public class PingInjector implements Listener {
 	
 	@EventHandler
 	public void serverListPing(ServerListPingEvent event) {
+		this.injectOpenConnections();
+		System.out.println("[PingAPI] Recived Ping from: " + event.getAddress().getHostAddress());
+	}
+	
+	@EventHandler
+	public void onLogin(PlayerLoginEvent e) {
 		this.injectOpenConnections();
 	}
 }

@@ -5,6 +5,7 @@ import java.lang.reflect.Constructor;
 import org.bukkit.Bukkit;
 
 public class PingEvent {
+	
 	private PingReply reply;
 	private boolean cancelEvent;
 	private boolean cancelPong;

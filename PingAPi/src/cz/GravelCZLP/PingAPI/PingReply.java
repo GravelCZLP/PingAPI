@@ -16,8 +16,8 @@ public class PingReply {
 	private int onlinePlayers;
 	private int maxPlayers;
 	private int protocolVersion;
-	private String protocolName;
 	private List<String> playerSample;
+	private String protocolName;
 	private boolean hidePlayers = false;
 	private CachedServerIcon icon = Bukkit.getServerIcon();
 	
@@ -27,8 +27,8 @@ public class PingReply {
 		this.onlinePlayers = onlinePlayers;
 		this.maxPlayers = maxPlayers;
 		this.protocolVersion = protocolVersion;
-		this.protocolName = protocolName;
 		this.playerSample = playerSample;
+		this.protocolName = protocolName;
 	}
 	
 	public int getOnlinePlayers() {
@@ -45,10 +45,6 @@ public class PingReply {
 	
 	public int getProtocolVersion() {
 		return this.protocolVersion;
-	}
-	
-	public String getProtocolName() {
-		return this.protocolName;
 	}
 	
 	public List<String> getPlayerSample() {
@@ -79,10 +75,6 @@ public class PingReply {
 		this.protocolVersion = protocolVersion;
 	}
 	
-	public void setProtocolName(String protocolName) {
-		this.protocolName = protocolName;
-	}
-	
 	public void setPlayerSample(List<String> playerSample) {
 		this.playerSample = playerSample;
 	}
@@ -93,5 +85,12 @@ public class PingReply {
 	
 	public void setIcon(CachedServerIcon icon) {
 		this.icon = icon;
+	}
+
+	public String getProtocolName() {
+		return protocolName;
+	}
+	public void setProtocolName(String newName) {
+		protocolName = newName;
 	}
 }
