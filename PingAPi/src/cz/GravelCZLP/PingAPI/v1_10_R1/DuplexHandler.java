@@ -1,6 +1,7 @@
 package cz.GravelCZLP.PingAPI.v1_10_R1;
 
 import java.lang.reflect.Field;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -28,12 +29,17 @@ import net.minecraft.server.v1_10_R1.ServerPing.ServerPingPlayerSample;
 public class DuplexHandler extends ChannelDuplexHandler {
 	private static final Field serverPingField = ReflectUtils.getFirstFieldByType(PacketStatusOutServerInfo.class, ServerPing.class);
 	private PingEvent event;
+	private InetAddress address;
+	
+	public DuplexHandler(InetAddress a) {
+		address = a;
+	}
 	
 	@Override
 	public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
 		if(msg instanceof PacketStatusOutServerInfo) {
 			PacketStatusOutServerInfo packet = (PacketStatusOutServerInfo) msg;
-			PingReply reply = this.constructReply(packet, ctx);
+			PingReply reply = this.constructReply(packet, ctx, address);
 			PingEvent event = new PingEvent(reply);
 			for(PingListener listener : PingAPI.getListeners()) {
 				listener.onPing(event);
@@ -57,20 +63,20 @@ public class DuplexHandler extends ChannelDuplexHandler {
 		super.channelRead(ctx, msg);
 	}
 
-	private PingReply constructReply(PacketStatusOutServerInfo packet, ChannelHandlerContext ctx) {
+	private PingReply constructReply(PacketStatusOutServerInfo packet, ChannelHandlerContext ctx, InetAddress address) {
 		try {
 			ServerPing ping = (ServerPing) serverPingField.get(packet);
 			String motd = ChatSerializer.a(ping.a());
 			int max = ping.b().a();
 			int online = ping.b().b();
 			int protocolVersion = 210;
-			String protocolName = "";
+			String protocolName = "1.10";
 			GameProfile[] profiles = ping.b().c();
 			List<String> list = new ArrayList<String>();
 			for(int i = 0; i < profiles.length; i++) {
 				list.add(profiles[i].getName());
 			}
-			PingReply reply = new PingReply(ctx, motd, online, max, protocolVersion, protocolName, list);
+			PingReply reply = new PingReply(ctx, motd, online, max, protocolVersion, protocolName, list, address);
 			return reply;
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -79,10 +85,10 @@ public class DuplexHandler extends ChannelDuplexHandler {
 	}
 	
 	private PacketStatusOutServerInfo constructPacket(PingReply reply) {
-		GameProfile[] sample = new GameProfile[reply.getPlayerSample().size()];
-		List<String> list = reply.getPlayerSample();
-		for(int i = 0; i < list.size(); i++) {
-			sample[i] = new GameProfile(UUID.randomUUID(), list.get(i));
+		int size = reply.getPlayerSample().size();
+		GameProfile[] sample = new GameProfile[size];
+		for(int i = 0; i < size; i++) {
+			sample[i] = new GameProfile(UUID.randomUUID(), reply.getPlayerSample().get(i));
 		}
 		ServerPingPlayerSample playerSample = new ServerPingPlayerSample(reply.getMaxPlayers(), reply.getOnlinePlayers());
         playerSample.a(sample);

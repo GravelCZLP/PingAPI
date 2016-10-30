@@ -1,16 +1,13 @@
 package cz.GravelCZLP.PingAPI;
 
+import java.net.InetAddress;
 import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.util.CachedServerIcon;
 
-import io.netty.channel.ChannelHandlerContext;
-
-import com.mojang.authlib.GameProfile;
-
-@SuppressWarnings("unused")
 public class PingReply {
+	@SuppressWarnings("unused")
 	private Object ctx;
 	private String motd;
 	private int onlinePlayers;
@@ -20,8 +17,9 @@ public class PingReply {
 	private String protocolName;
 	private boolean hidePlayers = false;
 	private CachedServerIcon icon = Bukkit.getServerIcon();
+	private InetAddress address;
 	
-	public PingReply(Object ctx, String motd, int onlinePlayers, int maxPlayers, int protocolVersion, String protocolName, List<String> playerSample) {
+	public PingReply(Object ctx, String motd, int onlinePlayers, int maxPlayers, int protocolVersion, String protocolName, List<String> playerSample, InetAddress address) {
 		this.ctx = ctx;
 		this.motd = motd;
 		this.onlinePlayers = onlinePlayers;
@@ -29,6 +27,7 @@ public class PingReply {
 		this.protocolVersion = protocolVersion;
 		this.playerSample = playerSample;
 		this.protocolName = protocolName;
+		this.address = address;
 	}
 	
 	public int getOnlinePlayers() {
@@ -49,6 +48,10 @@ public class PingReply {
 	
 	public List<String> getPlayerSample() {
 		return this.playerSample;
+	}
+	
+	public InetAddress getAddress() {
+		return address;
 	}
 	
 	public boolean arePlayersHidden() {

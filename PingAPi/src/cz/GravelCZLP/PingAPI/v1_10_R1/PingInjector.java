@@ -2,6 +2,7 @@ package cz.GravelCZLP.PingAPI.v1_10_R1;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.InetAddress;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,14 +36,14 @@ public class PingInjector implements Listener {
 		}
 	}
 	
-	public void injectOpenConnections() {
+	public void injectOpenConnections(InetAddress address) {
 		try {
 			Field field = ReflectUtils.getFirstFieldByType(NetworkManager.class, Channel.class);
 			field.setAccessible(true);
 			for(Object manager : networkManagers) {
 				Channel channel = (Channel) field.get(manager);
 				if(channel.pipeline().context("ping_handler") == null && (channel.pipeline().context("packet_handler") != null)) {
-					channel.pipeline().addBefore("packet_handler", "ping_handler", new DuplexHandler());
+					channel.pipeline().addBefore("packet_handler", "ping_handler", new DuplexHandler(address));
 				}
 			}
 		} catch(Exception e) {
@@ -67,12 +68,12 @@ public class PingInjector implements Listener {
 	
 	@EventHandler
 	public void serverListPing(ServerListPingEvent event) {
-		this.injectOpenConnections();
+		this.injectOpenConnections(event.getAddress());
 		System.out.println("[PingAPI] Recived Ping from: " + event.getAddress().getHostAddress());
 	}
 	
 	@EventHandler
 	public void onLogin(PlayerLoginEvent e) {
-		this.injectOpenConnections();
+		this.injectOpenConnections(e.getAddress());
 	}
 }
