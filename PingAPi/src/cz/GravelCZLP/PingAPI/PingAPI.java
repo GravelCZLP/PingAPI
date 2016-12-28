@@ -17,8 +17,18 @@ public class PingAPI extends JavaPlugin {
 	        String version = name.substring(name.lastIndexOf('.') + 1);
 	        Class<?> injector = Class.forName("cz.GravelCZLP.PingAPI." + version + ".PingInjector");
 	        Bukkit.getPluginManager().registerEvents((Listener) injector.newInstance(), this);
+	        for (PingListener listener : listeners) {
+	        	listener.onPingAPIEnable(this);
+	        }
 		} catch(Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void onDisable() {
+		for (PingListener listener : listeners) {
+			listener.onPingAPIDisable(this);
 		}
 	}
 	

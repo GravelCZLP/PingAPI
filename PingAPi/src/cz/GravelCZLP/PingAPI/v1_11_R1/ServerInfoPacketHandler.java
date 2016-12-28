@@ -1,21 +1,22 @@
-package cz.GravelCZLP.PingAPI.v1_10_R1;
+package cz.GravelCZLP.PingAPI.v1_11_R1;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.UUID;
 
-import org.bukkit.craftbukkit.v1_10_R1.util.CraftIconCache;
+import org.bukkit.craftbukkit.v1_11_R1.util.CraftIconCache;
 
 import com.mojang.authlib.GameProfile;
 
 import cz.GravelCZLP.PingAPI.PingReply;
 import cz.GravelCZLP.PingAPI.ServerInfoPacket;
-import net.minecraft.server.v1_10_R1.ChatComponentText;
-import net.minecraft.server.v1_10_R1.PacketStatusOutServerInfo;
-import net.minecraft.server.v1_10_R1.ServerPing;
-import net.minecraft.server.v1_10_R1.ServerPing.ServerData;
-import net.minecraft.server.v1_10_R1.ServerPing.ServerPingPlayerSample;
+import net.minecraft.server.v1_11_R1.ChatComponentText;
+import net.minecraft.server.v1_11_R1.PacketStatusOutServerInfo;
+import net.minecraft.server.v1_11_R1.ServerPing;
+import net.minecraft.server.v1_11_R1.ServerPing.ServerData;
+import net.minecraft.server.v1_11_R1.ServerPing.ServerPingPlayerSample;
+
 
 public class ServerInfoPacketHandler implements ServerInfoPacket {
 	private PingReply reply;

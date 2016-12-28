@@ -1,4 +1,4 @@
-package cz.GravelCZLP.PingAPI.v1_10_R1;
+package cz.GravelCZLP.PingAPI.v1_11_R1;
 
 import java.lang.reflect.Field;
 import java.net.InetAddress;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.bukkit.craftbukkit.v1_10_R1.util.CraftIconCache;
+import org.bukkit.craftbukkit.v1_11_R1.util.CraftIconCache;
 
 import com.mojang.authlib.GameProfile;
 
@@ -18,13 +18,14 @@ import cz.GravelCZLP.PingAPI.reflect.ReflectUtils;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
-import net.minecraft.server.v1_10_R1.ChatComponentText;
-import net.minecraft.server.v1_10_R1.IChatBaseComponent.ChatSerializer;
-import net.minecraft.server.v1_10_R1.PacketStatusOutPong;
-import net.minecraft.server.v1_10_R1.PacketStatusOutServerInfo;
-import net.minecraft.server.v1_10_R1.ServerPing;
-import net.minecraft.server.v1_10_R1.ServerPing.ServerData;
-import net.minecraft.server.v1_10_R1.ServerPing.ServerPingPlayerSample;
+import net.minecraft.server.v1_11_R1.ChatComponentText;
+import net.minecraft.server.v1_11_R1.IChatBaseComponent.ChatSerializer;
+import net.minecraft.server.v1_11_R1.PacketStatusOutPong;
+import net.minecraft.server.v1_11_R1.PacketStatusOutServerInfo;
+import net.minecraft.server.v1_11_R1.ServerPing;
+import net.minecraft.server.v1_11_R1.ServerPing.ServerData;
+import net.minecraft.server.v1_11_R1.ServerPing.ServerPingPlayerSample;
+
 
 public class DuplexHandler extends ChannelDuplexHandler {
 	private static final Field serverPingField = ReflectUtils.getFirstFieldByType(PacketStatusOutServerInfo.class, ServerPing.class);
@@ -69,8 +70,8 @@ public class DuplexHandler extends ChannelDuplexHandler {
 			String motd = ChatSerializer.a(ping.a());
 			int max = ping.b().a();
 			int online = ping.b().b();
-			int protocolVersion = 210;
-			String protocolName = "1.10";
+			int protocolVersion = 316;
+			String protocolName = "1.11.2";
 			GameProfile[] profiles = ping.b().c();
 			List<String> list = new ArrayList<String>();
 			for(int i = 0; i < profiles.length; i++) {
