@@ -69,7 +69,6 @@ public class PingInjector implements Listener {
 	@EventHandler
 	public void serverListPing(ServerListPingEvent event) {
 		this.injectOpenConnections(event.getAddress());
-		System.out.println("[PingAPI] Recived Ping from: " + event.getAddress().getHostAddress());
 	}
 	
 	@EventHandler
